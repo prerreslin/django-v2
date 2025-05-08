@@ -1,0 +1,44 @@
+{% extends 'base.html' %} 
+{% load math_filters %} 
+{% block content %}
+
+<div class="container my-3"> 
+  <div class="row">
+    <div class="col-md-6">
+      <br><br><br> 
+      <img
+        src="{{ product.image_path|default:'https://i.pinimg.com/736x/cd/27/54/cd2754f91a8592583c8d8ad0983bc400.jpg' }}"
+        alt="product image"
+        style="width: 600px; height: 700px; object-fit: cover; border-radius: 10px;"
+      />
+    </div>
+    <div class="col-md-6 mt-5">
+      <h5>{{ product.name }}</h5>
+      {% if product.description %}
+      <p>Description: {{ product.description }}</p>
+      {% endif %}
+      <p>Category: {{ product.category.name }}</p>
+      <div class="product-rating">
+        {% for i in "12345" %}
+          {% if forloop.counter <= product.rating %}
+          <i class="bi bi-star-fill text-warning"></i>
+          {% else %}
+          <i class="bi bi-star text-muted"></i>
+          {% endif %}
+        {% endfor %}
+      </div>
+      {% if product.discount %}
+      <span class="text-success">
+        ${{ product.price|calculate_discount:product.discount}}
+      </span>
+      <span class="text-muted text-decoration-line-through">
+        ${{product.price}}
+      </span>
+      {% else %}
+      <span class="text-success"> ${{product.price}} </span>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+{% endblock %}

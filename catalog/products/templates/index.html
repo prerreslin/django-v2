@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+
+{% load math_filters %}
+{% block content %}
+<div class='container'>
+<br>
+<br>
+    <h1 class='text-center'>
+        Catalog of products
+    </h1>
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+         {% if products_count > 0 %}
+            <p class="text-center" style="font-size: 1.2rem; font-weight: bold; color: #28a745;">
+                <i class="bi bi-check-circle-fill"></i> Found {{ products_count }} products
+            </p>
+        {% else %}
+            <p class="text-center" style="font-size: 1.2rem; font-weight: bold; color: #dc3545;">
+                <i class="bi bi-x-circle-fill"></i> No products available
+            </p>
+        {% endif %}
+        {% for product in products %}
+            <div class="col">
+                <div class="card h-100 shadow-sm">
+                  <img src="{{ product.image_path|default:'https://i.pinimg.com/736x/1b/9e/c7/1b9ec766f18ab2f448a9fc28d35c697d.jpg' }}" 
+                  alt="{{ product.name }}" class="card-img-top" 
+                  style="width: 100px; height: 100px; object-fit: cover; border-radius: 10px;">
+             
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            {{ product.name }}
+                        </h5>
+                        {% if product.discount %}
+                            <span class="text-success">
+                                ${{ product.price|calculate_discount:product.discount }}
+                            </span>
+                            <span class="text-muted text-decoration-line-through">
+                                ${{ product.price }}
+                            </span>
+                        {% else %}
+                             <span class="text-success">
+                                ${{ product.price }}
+                             </span>   
+                        {% endif %}
+                        <div class="product-rating">
+                            {% for i in "12345" %} 
+                                {% if forloop.counter <= product.rating %}
+                                    <i class="bi bi-star-fill text-warning"></i>
+                                {% else %}
+                                    <i class="bi bi-star text-muted"></i>
+                                {% endif %} 
+                            {% endfor %}
+                        </div>
+                        {% if not product.available %}
+                            <small class="text-muted">
+                                Not available
+                            </small>
+                        {% endif %}
+                        <br>
+                        <a href="{% url 'products:product_details' product.id%}" class="btn btn-primary">More</a>
+                        <a href="{% url 'products:cart_add' product.id%}" class="btn btn-primary">Add to cart</a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+</div>
+</div>
+{% endblock %}

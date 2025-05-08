@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    
+<br><br><br>
+        <br><br><br>   
+<div class="alert alert-success">
+    Пошту успішно підтвердженно!
+    {{ email }}
+  </div>
+  <a href="{% url 'accounts:profile' %}">Повернутись у профіль</a>
+
+{% endblock %}

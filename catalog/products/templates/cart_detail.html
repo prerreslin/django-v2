@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <br><br><br>
+    <br><br><br>
+    <div class='container mt-4'>
+        <h2>Your cart</h2>
+        {% if cart_items %}
+
+        <div class='table-responsive'>
+            <table class='table table-bordered table-hover align-middle text-center'>
+                <thead class='table-light'>
+                    <tr>
+                        <th>Product</th>
+                        <th>Amount</th>
+                        <th>Price</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in cart_items %}
+                        <tr>
+                            <td>{{ item.product.name }}</td>
+                            <td>
+                                <a href="{% url 'products:cart_remove' item.product.id %}" class="btn btn-danger">−</a>
+                                {{ item.amount }}
+                                <a href="{% url 'products:cart_add' item.product.id %}" class="btn btn-success">+</a>
+                            </td>
+                            <td>${{ item.product.price|floatformat:2 }}</td>
+                            <td>
+                                <a href="{% url 'products:cart_remove' item.product.id %}?remove_all=1" class="btn btn-danger">Remove</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    <tr class='table-secondary'>
+                        <td class='text-start'>
+                            <strong>Total: </strong>
+                        </td>
+                        <td class='text-end' colspan='4'>
+                            <strong>
+                                $ {{ total_price }}
+                            </strong>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <a href="{% url 'products:checkout' %}" class='btn btn-success'>Create Order</a>
+
+        </div>
+        
+        {% else %} 
+            <div class='alert alert-info' role='alert'>
+                Your cart is empty
+            </div>
+        {% endif %}
+    </div>
+
+{% endblock %}

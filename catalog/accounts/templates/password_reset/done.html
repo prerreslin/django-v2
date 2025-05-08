@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <br><br><br>
+    <br><br><br>
+    <h2 class="text-success">Letter Sent</h2>
+    <p>Check you email address. Note: Remeber to check the spam folder</p>
+    <a href="{% url 'accounts:login' %}">Go to Login</a>
+{% endblock %}

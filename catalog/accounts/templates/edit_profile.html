@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    
+    <h2>Edit Profile</h2>
+
+    {% if profile.avatar %}
+        <p>Current Avatar:</p>
+        <img src="{{ profile.avatar.url }}" alt="Avatar" width="100">
+    {% else %}
+        <p>No Avatar</p>
+    {% endif %}
+
+    <form enctype="multipart/form-data" method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="Submit">
+    </form>
+
+{% endblock %}
