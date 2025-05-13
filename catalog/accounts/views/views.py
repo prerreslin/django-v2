@@ -9,8 +9,8 @@ from django.http import HttpResponseBadRequest
 from django.contrib.auth.models import User
 from django.conf import settings
 
-from .forms import RegisterForm, ProfileUpdateForm, RegisterFormNoCaptcha
-from .models import Profile
+from ..forms import RegisterForm, ProfileUpdateForm, RegisterFormNoCaptcha
+from ..models import Profile
 from products.models import Cart, Product, CartItem
 from utils.email import send_email_confirm
 
